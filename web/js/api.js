@@ -1,9 +1,10 @@
 /* Mosel Wortschatz: AI client and word-list loader.
  *
- * Two ways to run:
- *  - with the Python server: AI requests go to /api/ai/chat; the Groq key stays on the server.
- *  - as a static site (GitHub Pages, or index.html opened from disk): the learner pastes their own
- *    Groq key and the browser calls Groq directly. The key is kept in this browser only.
+ * Where the backend is:
+ *  - same origin: the page is served by the Python server (local or Render).
+ *  - remote: a static copy (GitHub Pages) uses the server named in <meta name="mosel-backend">
+ *    for the word list and AI, so visitors need no key and the key stays on the server.
+ *  - none: the learner pastes their own Groq key and the browser calls Groq directly.
  */
 (function(){
   'use strict';
@@ -23,6 +24,23 @@
   const NEXT_MODEL = [404, 408, 413, 429, 500, 502, 503, 504];
 
   let health = null;
+  let base = '';                                 // '' = same origin, or the remote backend URL (ends with /)
+
+  function remoteBackend(){
+    const meta = document.querySelector('meta[name="mosel-backend"]');
+    const url = meta && meta.content ? meta.content.trim() : '';
+    return url ? url.replace(/\/?$/, '/') : '';
+  }
+
+  async function probe(prefix, timeoutMs){
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const r = await fetch(prefix + 'api/health', {headers: {'Accept': 'application/json'}, signal: ctrl.signal});
+      const type = r.headers.get('content-type') || '';
+      return r.ok && type.includes('json') ? await r.json() : null;
+    } catch(e){ return null; } finally { clearTimeout(timer); }
+  }
 
   function store(key, value){
     try { if(value == null) localStorage.removeItem(key); else localStorage.setItem(key, value); } catch(e){}
@@ -31,13 +49,16 @@
     try { return localStorage.getItem(key); } catch(e){ return null; }
   }
 
-  async function init(){
-    if(location.protocol === 'file:') return null;
-    try {
-      const r = await fetch('api/health', {headers: {'Accept': 'application/json'}});
-      const type = r.headers.get('content-type') || '';
-      if(r.ok && type.includes('json')) health = await r.json();
-    } catch(e){ health = null; }
+  /* onWait(message) is called if the remote server has to wake up (free hosting sleeps when idle). */
+  async function init(onWait){
+    health = location.protocol === 'file:' ? null : await probe('', 5000);
+    const remote = remoteBackend();
+    if(!health && remote){
+      const waking = setTimeout(() => onWait && onWait('Waking up the server (free hosting sleeps when idle; up to a minute)…'), 2500);
+      health = await probe(remote, 75000);
+      clearTimeout(waking);
+      if(health) base = remote;
+    }
     document.documentElement.classList.toggle('server-ai', !!(health && health.ai));
     return health;
   }
@@ -50,7 +71,7 @@
     delete payload.model;
     for(let attempt = 0; attempt < 2; attempt++){
       const code = read(ACCESS_KEY);
-      const res = await fetch('api/ai/chat', {
+      const res = await fetch(base + 'api/ai/chat', {
         method: 'POST',
         headers: Object.assign({'Content-Type': 'application/json'}, code ? {'X-Access-Code': code} : {}),
         body: JSON.stringify(payload),
@@ -60,7 +81,7 @@
       if(!entered) return res;
       store(ACCESS_KEY, entered.trim());
     }
-    return fetch('api/ai/chat', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
+    return fetch(base + 'api/ai/chat', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
   }
 
   async function direct(body, apiKey){
@@ -109,7 +130,7 @@
       try { const d = JSON.parse(custom); return Object.assign({source: 'custom'}, d); } catch(e){ store(CUSTOM_VOCAB_KEY, null); }
     }
     if(health){
-      const r = await fetch('api/vocab');
+      const r = await fetch(base + 'api/vocab');
       if(r.ok) return r.json();
     }
     const [chapters, examples] = await Promise.all([
@@ -143,6 +164,7 @@
 
   function resetWords(){ store(CUSTOM_VOCAB_KEY, null); }
 
-  window.MoselAI = {SERVER, init, chat, get serverAI(){ return !!(health && health.ai); }, get health(){ return health; }};
+  window.MoselAI = {SERVER, init, chat, get serverAI(){ return !!(health && health.ai); }, get health(){ return health; },
+    get remote(){ return base; }};
   window.MoselData = {load: loadWords, importWords, resetWords, validate: validateWords};
 })();

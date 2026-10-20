@@ -51,6 +51,8 @@ class Settings:
     daily_cap: int = 1500              # AI requests per day for the whole server
     max_tokens_cap: int = 2500
     trust_proxy: bool = False          # read the client IP from X-Forwarded-For (behind Render, Fly, nginx)
+    # Static copies of the trainer (e.g. GitHub Pages) that may use this server for words and AI.
+    cors_origins: list[str] = field(default_factory=lambda: ["https://sanojkumar21.github.io"])
     data_dir: Path = ROOT / "data"
     wordlist_dir: Path | None = None   # a folder with your own vocab.json, e.g. outside the repository
     web_dir: Path = ROOT / "web"
@@ -74,6 +76,7 @@ def load_settings(env_file: Path | None = None) -> Settings:
         daily_cap=_int("DAILY_CAP", defaults.daily_cap),
         max_tokens_cap=_int("MAX_TOKENS_CAP", defaults.max_tokens_cap),
         trust_proxy=os.environ.get("TRUST_PROXY", "").lower() in ("1", "true", "yes"),
+        cors_origins=_models("CORS_ORIGINS", ",".join(defaults.cors_origins)),
         data_dir=Path(os.environ.get("DATA_DIR", defaults.data_dir)),
         wordlist_dir=Path(os.environ["WORDLIST_DIR"]) if os.environ.get("WORDLIST_DIR") else None,
         web_dir=Path(os.environ.get("WEB_DIR", defaults.web_dir)),

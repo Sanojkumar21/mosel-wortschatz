@@ -6,13 +6,15 @@ import vm from 'node:vm';
 
 const SOURCE = readFileSync(new URL('../../web/js/api.js', import.meta.url), 'utf8');
 
-function load({replies = [], health = null} = {}){
+function load({replies = [], health = null, remote = '', remoteHealth = null} = {}){
   const calls = [];
   const storage = new Map();
   const respond = (status, body) => new Response(JSON.stringify(body), {status, headers: {'content-type': 'application/json'}});
   const fetch = async (url, opts = {}) => {
     calls.push({url, body: opts.body ? JSON.parse(opts.body) : null, headers: opts.headers || {}});
     if(url === 'api/health') return health ? respond(200, health) : new Response('not found', {status: 404, headers: {'content-type': 'text/html'}});
+    if(remote && url === remote + 'api/health') return remoteHealth ? respond(200, remoteHealth) : respond(503, {});
+    if(remote && url === remote + 'api/vocab') return respond(200, {source: 'private', chapters: [{title: 'A', words: []}], examples_en: {}});
     const next = replies.shift() || [200, 'ok'];
     const [status, content] = next;
     return status === 200
@@ -20,8 +22,9 @@ function load({replies = [], health = null} = {}){
       : respond(status, {error: {message: content, code: content}});
   };
   const window = {prompt: () => null};
-  const ctx = {window, fetch, Response, location: {protocol: 'http:'}, console,
-    document: {documentElement: {classList: {toggle(){}}}},
+  const ctx = {window, fetch, Response, location: {protocol: 'http:'}, console, setTimeout, clearTimeout, AbortController,
+    document: {documentElement: {classList: {toggle(){}}},
+               querySelector: sel => (sel.includes('mosel-backend') ? {content: remote} : null)},
     localStorage: {getItem: k => storage.get(k) ?? null, setItem: (k, v) => storage.set(k, v), removeItem: k => storage.delete(k)}};
   vm.runInNewContext(SOURCE, ctx);
   return {ai: window.MoselAI, data: window.MoselData, calls};
@@ -90,4 +93,25 @@ test('imported word lists are validated', () => {
   const {data} = load();
   assert.equal(data.importWords(JSON.stringify([{title: 'A', words: [{id: 1, term: 'das Haus', translation: 'house'}]}])), 1);
   assert.throws(() => data.importWords('[{"title": "A", "words": [{"id": 1}]}]'), /id, term and translation/);
+});
+
+test('a static copy uses the remote backend for words and AI, with no key', async () => {
+  const remote = 'https://backend.example/';
+  const {ai, data, calls} = load({remote, remoteHealth: {ok: true, ai: true}});
+  await ai.init();
+  assert.equal(ai.serverAI, true);
+  assert.equal(ai.remote, remote);
+  const words = await data.load();
+  assert.equal(words.source, 'private');
+  await ai.chat(body(), ai.SERVER);
+  const sent = calls.at(-1);
+  assert.equal(sent.url, remote + 'api/ai/chat');
+  assert.ok(!('Authorization' in sent.headers));
+});
+
+test('if the remote backend is down, the static copy falls back to own-key mode', async () => {
+  const {ai} = load({remote: 'https://backend.example/', remoteHealth: null});
+  await ai.init();
+  assert.equal(ai.serverAI, false);
+  await assert.rejects(ai.chat(body(), ''), /Groq API key/);
 });

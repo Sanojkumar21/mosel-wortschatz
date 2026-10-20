@@ -72,3 +72,13 @@ def test_request_validation(make_client):
     huge = {"tier": "fast", "messages": [{"role": "user", "content": "x" * 11_000}] * 4}
     assert client.post("/api/ai/chat", json=huge).status_code == 422
     assert client.post("/api/ai/chat", json={"messages": [{"role": "tool", "content": "x"}]}).status_code == 422
+
+
+def test_cors_allows_only_the_static_site(make_client):
+    client, _ = make_client()
+    ok = client.options("/api/ai/chat", headers={"Origin": "https://sanojkumar21.github.io",
+                                                 "Access-Control-Request-Method": "POST",
+                                                 "Access-Control-Request-Headers": "content-type,x-access-code"})
+    assert ok.headers.get("access-control-allow-origin") == "https://sanojkumar21.github.io"
+    other = client.get("/api/health", headers={"Origin": "https://evil.example"})
+    assert "access-control-allow-origin" not in other.headers

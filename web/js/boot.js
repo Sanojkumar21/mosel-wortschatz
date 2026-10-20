@@ -4,7 +4,7 @@
   const body = document.getElementById('vtBody');
   const footer = document.getElementById('dataInfo');
   try {
-    await MoselAI.init();
+    await MoselAI.init(msg => { body.innerHTML = '<div class="vt-qsetup"><p class="vt-mode-copy">' + msg + '</p></div>'; });
     const data = await MoselData.load();
     window.VOCAB_DATA = data.chapters;
     window.EXAMPLE_EN = data.examples_en || {};
@@ -12,7 +12,7 @@
     const labels = {private: 'your word list', custom: 'your imported word list', sample: 'sample word list'};
     if(footer){
       footer.textContent = `${labels[data.source] || data.source} · ${data.chapters.length} chapters · ${words} words · AI: ${
-        MoselAI.serverAI ? 'server' : 'your own Groq key'}`;
+        MoselAI.serverAI ? (MoselAI.remote ? 'hosted server' : 'server') : 'your own Groq key'}`;
     }
     document.getElementById('resetWords').hidden = data.source !== 'custom';
     const app = document.createElement('script');

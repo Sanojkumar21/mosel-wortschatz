@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
@@ -77,6 +78,10 @@ def create_app(settings: Settings | None = None, transport=None) -> FastAPI:
 
     app = FastAPI(title="Mosel Wortschatz", version=__version__, lifespan=lifespan,
                   docs_url="/api/docs", openapi_url="/api/openapi.json", redoc_url=None)
+
+    if settings.cors_origins:
+        app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origins, allow_methods=["GET", "POST"],
+                           allow_headers=["Content-Type", "X-Access-Code"], max_age=3600)
 
     @app.get("/api/health")
     def health():

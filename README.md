@@ -7,7 +7,7 @@
 
 **Live:**
 - **Full version, with the Python backend:** https://mosel-wortschatz.onrender.com (AI is built in; it asks for an access code. Free hosting sleeps when idle, so the first load can take about 50 s.)
-- **Static version:** https://sanojkumar21.github.io/mosel-wortschatz/ (no server; AI features use your own free Groq key)
+- **Static version:** https://sanojkumar21.github.io/mosel-wortschatz/ (static frontend that uses the Render backend for the word list and AI; if the backend is unreachable, it falls back to the sample list and your own Groq key)
 
 ![Flashcards](docs/screenshots/cards.jpg)
 
@@ -47,15 +47,15 @@ flowchart LR
   end
 ```
 
-Two ways to run it:
+Three ways the same frontend can run:
 
-| | With the Python backend | Static (GitHub Pages, or `index.html` from disk) |
-|---|---|---|
-| Groq key | on the server, in `.env`; never sent to the browser | each learner pastes their own; sent only to Groq |
-| Word list | yours (`data/private/`) or the sample | the sample, or one you import in the page |
-| Protection | rate limits, request size limits, optional access code | n/a |
+| | Served by the Python backend | Static copy + hosted backend (GitHub Pages → Render) | Static, no backend |
+|---|---|---|---|
+| Groq key | on the server; never sent to the browser | on the server; never sent to the browser | each learner pastes their own; sent only to Groq |
+| Word list | yours (secret file / `data/private/`) or the sample | loaded from the backend | the sample, or one imported in the page |
+| Protection | rate limits, size limits, optional access code | the same, plus CORS limited to the static site's origin | n/a |
 
-The browser code doesn't care which: `web/js/api.js` checks `/api/health` and routes AI calls to the server when it exists, otherwise straight to Groq with the learner's key.
+`web/js/api.js` decides at start-up: the same origin's `/api/health`, else the backend named in `<meta name="mosel-backend">` (set by `scripts/build_static.py`; it shows a "waking up" message while a free server starts), else direct calls to Groq with the learner's key.
 
 **Reliability built in (both modes):**
 - **Model failover.** Models are tried in order (`gpt-oss-120b` → `gpt-oss-20b` → `qwen3.8-27b`). A retired model (404), exhausted quota (429), overload (5xx) or oversized request moves on to the next one.
@@ -115,6 +115,7 @@ On the hosted static site, **"Use my own word list (JSON)"** in the footer loads
 | `RATE_PER_MINUTE` / `RATE_PER_DAY` | `12` / `300` | AI requests per visitor |
 | `DAILY_CAP` | `1500` | AI requests per day for the whole server |
 | `TRUST_PROXY` | `0` | `1` behind Render / Fly / nginx, so limits see the real client IP |
+| `CORS_ORIGINS` | `https://sanojkumar21.github.io` | static sites allowed to use this backend |
 | `WORDLIST_DIR` | (empty) | folder with your own `vocab.json` (checked before `/etc/secrets` and `data/private/`) |
 | `HOST` / `PORT` | `127.0.0.1` / `8000` | where to listen |
 

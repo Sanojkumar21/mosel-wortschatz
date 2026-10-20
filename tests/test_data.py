@@ -60,3 +60,12 @@ def test_without_secrets_the_sample_is_used(data_dir, tmp_path, monkeypatch):
     import mosel.vocab as vocab_module
     monkeypatch.setattr(vocab_module, "RENDER_SECRETS", tmp_path / "missing")
     assert load_dataset(data_dir)["source"] == "sample"
+
+
+def test_static_build_points_at_the_backend_and_has_no_private_data(tmp_path):
+    from scripts.build_static import build
+    out = build(tmp_path / "site", backend="https://backend.example/")
+    assert '<meta name="mosel-backend" content="https://backend.example/">' in (out / "index.html").read_text()
+    assert json.loads((out / "data" / "vocab.json").read_text())[0]["title"] == "Unterwegs"   # the public sample
+    off = build(tmp_path / "site2", backend="")
+    assert '<meta name="mosel-backend" content="">' in (off / "index.html").read_text()
