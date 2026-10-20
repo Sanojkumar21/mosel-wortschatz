@@ -1,0 +1,503 @@
+[
+ {
+  "number": 1,
+  "title": "Unterwegs",
+  "title_en": "On the road",
+  "words": [
+   {
+    "id": 1,
+    "term": "der Bahnhof, Bahnhöfe",
+    "translation": "train station",
+    "example": "Der Bahnhof liegt mitten in der Stadt.",
+    "core": true,
+    "section": "Am Bahnhof"
+   },
+   {
+    "id": 2,
+    "term": "die Fahrkarte, -n",
+    "translation": "ticket",
+    "example": "Ich kaufe die Fahrkarte am Automaten.",
+    "core": true,
+    "section": "Am Bahnhof"
+   },
+   {
+    "id": 3,
+    "term": "das Gleis, -e",
+    "translation": "platform, track",
+    "example": "Der Zug fährt heute von Gleis 4 ab.",
+    "core": true,
+    "section": "Am Bahnhof"
+   },
+   {
+    "id": 4,
+    "term": "die Verspätung, -en",
+    "translation": "delay",
+    "example": "Der Zug hat zehn Minuten Verspätung.",
+    "core": true,
+    "section": "Am Bahnhof"
+   },
+   {
+    "id": 5,
+    "term": "umsteigen",
+    "translation": "to change (trains)",
+    "example": "In Köln müssen wir umsteigen.",
+    "core": true,
+    "section": "Am Bahnhof"
+   },
+   {
+    "id": 6,
+    "term": "der Anschluss, Anschlüsse",
+    "translation": "connection",
+    "example": "Wegen der Verspätung habe ich meinen Anschluss verpasst.",
+    "core": false,
+    "section": "Am Bahnhof"
+   },
+   {
+    "id": 7,
+    "term": "pünktlich",
+    "translation": "on time",
+    "example": "Heute ist der Bus pünktlich.",
+    "core": true,
+    "section": "Am Bahnhof"
+   },
+   {
+    "id": 8,
+    "term": "die Unterkunft, Unterkünfte",
+    "translation": "accommodation",
+    "example": "Wir suchen eine günstige Unterkunft am See.",
+    "core": true,
+    "section": "Im Hotel"
+   },
+   {
+    "id": 9,
+    "term": "reservieren",
+    "translation": "to book, to reserve",
+    "example": "Ich möchte ein Zimmer für zwei Nächte reservieren.",
+    "core": true,
+    "section": "Im Hotel"
+   },
+   {
+    "id": 10,
+    "term": "das Einzelzimmer, -",
+    "translation": "single room",
+    "example": "Ein Einzelzimmer kostet 70 Euro pro Nacht.",
+    "core": false,
+    "section": "Im Hotel"
+   },
+   {
+    "id": 11,
+    "term": "die Rezeption, -en",
+    "translation": "reception",
+    "example": "Den Schlüssel bekommen Sie an der Rezeption.",
+    "core": true,
+    "section": "Im Hotel"
+   },
+   {
+    "id": 12,
+    "term": "das Frühstück (Singular)",
+    "translation": "breakfast",
+    "example": "Das Frühstück gibt es von sieben bis zehn Uhr.",
+    "core": true,
+    "section": "Im Hotel"
+   },
+   {
+    "id": 13,
+    "term": "sich beschweren",
+    "translation": "to complain",
+    "example": "Er hat sich über den Lärm beschwert.",
+    "core": false,
+    "section": "Im Hotel"
+   },
+   {
+    "id": 14,
+    "term": "der Ausflug, Ausflüge",
+    "translation": "trip, outing",
+    "example": "Am Sonntag machen wir einen Ausflug in die Berge.",
+    "core": true,
+    "section": "Ausflüge"
+   },
+   {
+    "id": 15,
+    "term": "die Sehenswürdigkeit, -en",
+    "translation": "sight, attraction",
+    "example": "Der Dom ist die bekannteste Sehenswürdigkeit der Stadt.",
+    "core": true,
+    "section": "Ausflüge"
+   },
+   {
+    "id": 16,
+    "term": "wandern",
+    "translation": "to hike",
+    "example": "Bei schönem Wetter wandern wir am Fluss entlang.",
+    "core": true,
+    "section": "Ausflüge"
+   },
+   {
+    "id": 17,
+    "term": "die Aussicht, -en",
+    "translation": "view",
+    "example": "Von oben hat man eine tolle Aussicht.",
+    "core": false,
+    "section": "Ausflüge"
+   },
+   {
+    "id": 18,
+    "term": "der Eintritt (Singular)",
+    "translation": "admission",
+    "example": "Der Eintritt ins Museum ist am Montag frei.",
+    "core": false,
+    "section": "Ausflüge"
+   },
+   {
+    "id": 19,
+    "term": "sich verlaufen",
+    "translation": "to get lost",
+    "example": "Ohne Karte haben wir uns im Wald verlaufen.",
+    "core": false,
+    "section": "Ausflüge"
+   },
+   {
+    "id": 20,
+    "term": "die Landschaft, -en",
+    "translation": "landscape",
+    "example": "Die Landschaft hier ist sehr abwechslungsreich.",
+    "core": true,
+    "section": "Ausflüge"
+   }
+  ]
+ },
+ {
+  "number": 2,
+  "title": "Alltag und Gesundheit",
+  "title_en": "Everyday life and health",
+  "words": [
+   {
+    "id": 21,
+    "term": "der Termin, -e",
+    "translation": "appointment",
+    "example": "Ich habe morgen um neun einen Termin beim Arzt.",
+    "core": true,
+    "section": "Beim Arzt"
+   },
+   {
+    "id": 22,
+    "term": "die Praxis, Praxen",
+    "translation": "doctor's office",
+    "example": "Die Praxis ist am Mittwochnachmittag geschlossen.",
+    "core": true,
+    "section": "Beim Arzt"
+   },
+   {
+    "id": 23,
+    "term": "das Rezept, -e",
+    "translation": "prescription",
+    "example": "Mit dem Rezept gehen Sie in die Apotheke.",
+    "core": true,
+    "section": "Beim Arzt"
+   },
+   {
+    "id": 24,
+    "term": "die Erkältung, -en",
+    "translation": "cold",
+    "example": "Sie hat eine starke Erkältung und bleibt zu Hause.",
+    "core": true,
+    "section": "Beim Arzt"
+   },
+   {
+    "id": 25,
+    "term": "weh tun",
+    "translation": "to hurt",
+    "example": "Mir tut seit gestern der Rücken weh.",
+    "core": true,
+    "section": "Beim Arzt"
+   },
+   {
+    "id": 26,
+    "term": "die Versichertenkarte, -n",
+    "translation": "health insurance card",
+    "example": "Bitte bringen Sie Ihre Versichertenkarte mit.",
+    "core": false,
+    "section": "Beim Arzt"
+   },
+   {
+    "id": 27,
+    "term": "sich erholen",
+    "translation": "to recover",
+    "example": "Nach der Grippe muss er sich gut erholen.",
+    "core": false,
+    "section": "Beim Arzt"
+   },
+   {
+    "id": 28,
+    "term": "sich bewegen",
+    "translation": "to move, to exercise",
+    "example": "Man sollte sich jeden Tag ein bisschen bewegen.",
+    "core": true,
+    "section": "Fit bleiben"
+   },
+   {
+    "id": 29,
+    "term": "die Ernährung (Singular)",
+    "translation": "diet, nutrition",
+    "example": "Eine gesunde Ernährung ist wichtig.",
+    "core": true,
+    "section": "Fit bleiben"
+   },
+   {
+    "id": 30,
+    "term": "der Verein, -e",
+    "translation": "club",
+    "example": "Mein Bruder spielt in einem Fußballverein.",
+    "core": true,
+    "section": "Fit bleiben"
+   },
+   {
+    "id": 31,
+    "term": "trainieren",
+    "translation": "to train",
+    "example": "Wir trainieren zweimal pro Woche.",
+    "core": false,
+    "section": "Fit bleiben"
+   },
+   {
+    "id": 32,
+    "term": "ausreichend",
+    "translation": "sufficient, enough",
+    "example": "Schläfst du ausreichend?",
+    "core": false,
+    "section": "Fit bleiben"
+   },
+   {
+    "id": 33,
+    "term": "der Stress (Singular)",
+    "translation": "stress",
+    "example": "Im Moment habe ich bei der Arbeit viel Stress.",
+    "core": true,
+    "section": "Fit bleiben"
+   },
+   {
+    "id": 34,
+    "term": "die Miete, -n",
+    "translation": "rent",
+    "example": "Die Miete ist im Januar gestiegen.",
+    "core": true,
+    "section": "Zu Hause"
+   },
+   {
+    "id": 35,
+    "term": "der Nachbar, -n",
+    "translation": "neighbour",
+    "example": "Unser Nachbar gießt im Urlaub die Blumen.",
+    "core": true,
+    "section": "Zu Hause"
+   },
+   {
+    "id": 36,
+    "term": "aufräumen",
+    "translation": "to tidy up",
+    "example": "Am Samstag räume ich die Wohnung auf.",
+    "core": true,
+    "section": "Zu Hause"
+   },
+   {
+    "id": 37,
+    "term": "der Müll (Singular)",
+    "translation": "rubbish, trash",
+    "example": "Bringst du bitte den Müll raus?",
+    "core": true,
+    "section": "Zu Hause"
+   },
+   {
+    "id": 38,
+    "term": "umziehen",
+    "translation": "to move (house)",
+    "example": "Nächsten Monat ziehen wir nach Hamburg um.",
+    "core": true,
+    "section": "Zu Hause"
+   },
+   {
+    "id": 39,
+    "term": "die Nebenkosten (Plural)",
+    "translation": "utility costs",
+    "example": "Die Nebenkosten sind in der Miete nicht enthalten.",
+    "core": false,
+    "section": "Zu Hause"
+   },
+   {
+    "id": 40,
+    "term": "gemütlich",
+    "translation": "cosy",
+    "example": "Das Wohnzimmer ist klein, aber gemütlich.",
+    "core": false,
+    "section": "Zu Hause"
+   }
+  ]
+ },
+ {
+  "number": 3,
+  "title": "Arbeit und Lernen",
+  "title_en": "Work and learning",
+  "words": [
+   {
+    "id": 41,
+    "term": "die Bewerbung, -en",
+    "translation": "application",
+    "example": "Ich schicke meine Bewerbung per E-Mail.",
+    "core": true,
+    "section": "Die Bewerbung"
+   },
+   {
+    "id": 42,
+    "term": "der Lebenslauf, Lebensläufe",
+    "translation": "CV, résumé",
+    "example": "Ein Lebenslauf sollte nicht länger als zwei Seiten sein.",
+    "core": true,
+    "section": "Die Bewerbung"
+   },
+   {
+    "id": 43,
+    "term": "das Vorstellungsgespräch, -e",
+    "translation": "job interview",
+    "example": "Morgen habe ich ein Vorstellungsgespräch.",
+    "core": true,
+    "section": "Die Bewerbung"
+   },
+   {
+    "id": 44,
+    "term": "die Erfahrung, -en",
+    "translation": "experience",
+    "example": "Haben Sie Erfahrung in diesem Bereich?",
+    "core": true,
+    "section": "Die Bewerbung"
+   },
+   {
+    "id": 45,
+    "term": "sich bewerben",
+    "translation": "to apply",
+    "example": "Sie bewirbt sich bei einer Firma in Berlin.",
+    "core": true,
+    "section": "Die Bewerbung"
+   },
+   {
+    "id": 46,
+    "term": "die Stelle, -n",
+    "translation": "position, job",
+    "example": "Die Stelle ist ab sofort frei.",
+    "core": false,
+    "section": "Die Bewerbung"
+   },
+   {
+    "id": 47,
+    "term": "die Besprechung, -en",
+    "translation": "meeting",
+    "example": "Die Besprechung beginnt um zehn Uhr.",
+    "core": true,
+    "section": "Im Büro"
+   },
+   {
+    "id": 48,
+    "term": "der Kollege, -n",
+    "translation": "colleague",
+    "example": "Mein Kollege hilft mir mit dem neuen Programm.",
+    "core": true,
+    "section": "Im Büro"
+   },
+   {
+    "id": 49,
+    "term": "erledigen",
+    "translation": "to get done, to deal with",
+    "example": "Diese Aufgabe erledige ich bis Freitag.",
+    "core": true,
+    "section": "Im Büro"
+   },
+   {
+    "id": 50,
+    "term": "die Überstunde, -n",
+    "translation": "overtime hour",
+    "example": "Letzte Woche habe ich fünf Überstunden gemacht.",
+    "core": false,
+    "section": "Im Büro"
+   },
+   {
+    "id": 51,
+    "term": "der Feierabend (Singular)",
+    "translation": "end of the working day",
+    "example": "Nach Feierabend gehe ich oft joggen.",
+    "core": true,
+    "section": "Im Büro"
+   },
+   {
+    "id": 52,
+    "term": "verantwortlich",
+    "translation": "responsible",
+    "example": "Wer ist für dieses Projekt verantwortlich?",
+    "core": false,
+    "section": "Im Büro"
+   },
+   {
+    "id": 53,
+    "term": "die Frist, -en",
+    "translation": "deadline",
+    "example": "Die Frist endet am 30. Juni.",
+    "core": false,
+    "section": "Im Büro"
+   },
+   {
+    "id": 54,
+    "term": "die Prüfung, -en",
+    "translation": "exam",
+    "example": "Im Mai mache ich die B1-Prüfung.",
+    "core": true,
+    "section": "Lernen"
+   },
+   {
+    "id": 55,
+    "term": "üben",
+    "translation": "to practise",
+    "example": "Ich übe jeden Tag zwanzig Minuten Vokabeln.",
+    "core": true,
+    "section": "Lernen"
+   },
+   {
+    "id": 56,
+    "term": "die Grammatik (Singular)",
+    "translation": "grammar",
+    "example": "Die Grammatik ist am Anfang nicht leicht.",
+    "core": true,
+    "section": "Lernen"
+   },
+   {
+    "id": 57,
+    "term": "sich merken",
+    "translation": "to remember, to memorise",
+    "example": "Neue Wörter kann ich mir mit Bildern gut merken.",
+    "core": true,
+    "section": "Lernen"
+   },
+   {
+    "id": 58,
+    "term": "bestehen",
+    "translation": "to pass (an exam)",
+    "example": "Er hat die Prüfung beim ersten Mal bestanden.",
+    "core": true,
+    "section": "Lernen"
+   },
+   {
+    "id": 59,
+    "term": "die Aussprache (Singular)",
+    "translation": "pronunciation",
+    "example": "Ihre Aussprache ist schon sehr gut.",
+    "core": false,
+    "section": "Lernen"
+   },
+   {
+    "id": 60,
+    "term": "die Wiederholung, -en",
+    "translation": "revision, review",
+    "example": "Regelmäßige Wiederholung hilft beim Lernen.",
+    "core": false,
+    "section": "Lernen"
+   }
+  ]
+ }
+]

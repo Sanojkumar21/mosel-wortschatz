@@ -1,0 +1,21 @@
+# One-click deploy on Render (free plan): https://render.com/deploy
+# After the first deploy, set GROQ_API_KEY (and optionally ACCESS_CODE) in the service's Environment tab.
+services:
+  - type: web
+    name: mosel-wortschatz
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m mosel
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: HOST
+        value: 0.0.0.0
+      - key: TRUST_PROXY
+        value: "1"
+      - key: GROQ_API_KEY
+        sync: false
+      - key: ACCESS_CODE
+        sync: false

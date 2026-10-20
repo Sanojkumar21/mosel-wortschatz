@@ -1,0 +1,19 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# your own word list stays on your machine
+data/private/*
+!data/private/README.md
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+_site/
