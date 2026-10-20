@@ -5,7 +5,9 @@
 [![CI](https://github.com/Sanojkumar21/mosel-wortschatz/actions/workflows/ci.yml/badge.svg)](https://github.com/Sanojkumar21/mosel-wortschatz/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**Live demo:** https://sanojkumar21.github.io/mosel-wortschatz/ (static version with a sample word list; AI features use your own free Groq key)
+**Live:**
+- **Full version, with the Python backend:** https://mosel-wortschatz.onrender.com (AI is built in; it asks for an access code. Free hosting sleeps when idle, so the first load can take about 50 s.)
+- **Static version:** https://sanojkumar21.github.io/mosel-wortschatz/ (no server; AI features use your own free Groq key)
 
 ![Flashcards](docs/screenshots/cards.jpg)
 
