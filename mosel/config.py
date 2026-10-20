@@ -52,6 +52,7 @@ class Settings:
     max_tokens_cap: int = 2500
     trust_proxy: bool = False          # read the client IP from X-Forwarded-For (behind Render, Fly, nginx)
     data_dir: Path = ROOT / "data"
+    wordlist_dir: Path | None = None   # a folder with your own vocab.json, e.g. outside the repository
     web_dir: Path = ROOT / "web"
 
     @property
@@ -74,5 +75,6 @@ def load_settings(env_file: Path | None = None) -> Settings:
         max_tokens_cap=_int("MAX_TOKENS_CAP", defaults.max_tokens_cap),
         trust_proxy=os.environ.get("TRUST_PROXY", "").lower() in ("1", "true", "yes"),
         data_dir=Path(os.environ.get("DATA_DIR", defaults.data_dir)),
+        wordlist_dir=Path(os.environ["WORDLIST_DIR"]) if os.environ.get("WORDLIST_DIR") else None,
         web_dir=Path(os.environ.get("WEB_DIR", defaults.web_dir)),
     )

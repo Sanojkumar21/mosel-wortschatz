@@ -94,6 +94,8 @@ Format (`data/private/vocab.json`; `examples_en.json` with `{"<word id>": "Engli
 
 On the hosted static site, **"Use my own word list (JSON)"** in the footer loads a list into your browser only.
 
+**On Render, without putting the list in the repository:** in the service's *Environment* tab, add two **Secret Files** named `vocab.json` and `examples_en.json`, with the contents of your files (the minified versions fit easily in Render's 1 MB limit). Render mounts them at `/etc/secrets/`, and the server uses them automatically on its next deploy. `/api/health` then reports `"dataset": "private"`. Anywhere else, point `WORDLIST_DIR` at a folder that contains your `vocab.json`.
+
 ## Deploy
 
 **Static site (free, no server):** pushed to `main` → GitHub Actions builds `_site/` (trainer + sample list) and deploys it to GitHub Pages. Locally: `make static`.
@@ -113,6 +115,7 @@ On the hosted static site, **"Use my own word list (JSON)"** in the footer loads
 | `RATE_PER_MINUTE` / `RATE_PER_DAY` | `12` / `300` | AI requests per visitor |
 | `DAILY_CAP` | `1500` | AI requests per day for the whole server |
 | `TRUST_PROXY` | `0` | `1` behind Render / Fly / nginx, so limits see the real client IP |
+| `WORDLIST_DIR` | (empty) | folder with your own `vocab.json` (checked before `/etc/secrets` and `data/private/`) |
 | `HOST` / `PORT` | `127.0.0.1` / `8000` | where to listen |
 
 API docs: `/api/docs` when the server is running.

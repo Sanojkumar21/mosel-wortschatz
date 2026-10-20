@@ -63,7 +63,7 @@ def client_id(request: Request, settings: Settings) -> str:
 
 def create_app(settings: Settings | None = None, transport=None) -> FastAPI:
     settings = settings or load_settings()
-    dataset = load_dataset(settings.data_dir)
+    dataset = load_dataset(settings.data_dir, settings.wordlist_dir)
     limiter = RateLimiter(settings.rate_per_minute, settings.rate_per_day, settings.daily_cap)
     groq = GroqClient(settings.groq_api_key, settings.groq_base_url,
                       {"quality": settings.models_quality, "fast": settings.models_fast}, transport=transport)

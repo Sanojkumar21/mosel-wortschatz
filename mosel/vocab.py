@@ -1,4 +1,9 @@
-"""The word list: your own (data/private/) if present, otherwise the bundled sample.
+"""The word list: your own if present, otherwise the bundled sample.
+
+Where "your own" can live, first match wins:
+  1. WORDLIST_DIR, if set (any folder with vocab.json)
+  2. /etc/secrets, where Render puts Secret Files (so a hosted copy needs no repository change)
+  3. data/private/ (git-ignored, for running locally)
 
 A dataset is a list of chapters, each with numbered words:
     [{"number": 1, "title": "...", "words": [{"id": 1, "term": "der Fluss, Flüsse",
@@ -32,10 +37,22 @@ def validate(chapters) -> int:
     return len(seen)
 
 
-def load_dataset(data_dir: Path) -> dict:
-    """Prefer data/private (your own list, never committed); fall back to data/sample."""
-    for source in ("private", "sample"):
-        folder = data_dir / source
+RENDER_SECRETS = Path("/etc/secrets")
+
+
+def candidate_folders(data_dir: Path, wordlist_dir: Path | None = None) -> list[tuple[str, Path]]:
+    folders = []
+    if wordlist_dir:
+        folders.append(("private", wordlist_dir))
+    folders.append(("private", RENDER_SECRETS))
+    folders.append(("private", data_dir / "private"))
+    folders.append(("sample", data_dir / "sample"))
+    return folders
+
+
+def load_dataset(data_dir: Path, wordlist_dir: Path | None = None) -> dict:
+    """Your own list if one is found (never committed); otherwise the public sample."""
+    for source, folder in candidate_folders(data_dir, wordlist_dir):
         vocab = folder / "vocab.json"
         if vocab.is_file():
             chapters = json.loads(vocab.read_text(encoding="utf-8"))
@@ -44,4 +61,5 @@ def load_dataset(data_dir: Path) -> dict:
             examples = json.loads(examples_file.read_text(encoding="utf-8")) if examples_file.is_file() else {}
             return {"source": source, "chapters": chapters, "examples_en": examples,
                     "chapter_count": len(chapters), "word_count": words}
-    raise DatasetError(f"no word list found in {data_dir}/private or {data_dir}/sample")
+    looked = ", ".join(str(f) for _, f in candidate_folders(data_dir, wordlist_dir))
+    raise DatasetError(f"no word list found (looked in {looked})")

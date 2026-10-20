@@ -39,3 +39,24 @@ def test_import_script_extracts_embedded_data(tmp_path):
                     f"<script>\nconst EXAMPLE_EN = {examples};\n</script>")
     main([str(html), "--out", str(tmp_path / "out")])
     assert json.loads((tmp_path / "out" / "vocab.json").read_text())[0]["words"][0]["term"] == "der Fluss"
+
+
+def test_wordlist_dir_and_render_secret_files_win(data_dir, tmp_path, monkeypatch):
+    import mosel.vocab as vocab_module
+    mine = [{"number": 1, "title": "Mine", "words": [{"id": 7, "term": "die Burg", "translation": "castle"}]}]
+    secrets = tmp_path / "etc-secrets"
+    secrets.mkdir()
+    (secrets / "vocab.json").write_text(json.dumps(mine))
+    monkeypatch.setattr(vocab_module, "RENDER_SECRETS", secrets)
+    assert load_dataset(data_dir)["word_count"] == 1                        # Render Secret Files
+    other = tmp_path / "elsewhere"
+    other.mkdir()
+    (other / "vocab.json").write_text(json.dumps(mine * 1 + [{"number": 2, "title": "B", "words": [
+        {"id": 8, "term": "der Turm", "translation": "tower"}]}]))
+    assert load_dataset(data_dir, other)["word_count"] == 2                 # WORDLIST_DIR beats both
+
+
+def test_without_secrets_the_sample_is_used(data_dir, tmp_path, monkeypatch):
+    import mosel.vocab as vocab_module
+    monkeypatch.setattr(vocab_module, "RENDER_SECRETS", tmp_path / "missing")
+    assert load_dataset(data_dir)["source"] == "sample"
